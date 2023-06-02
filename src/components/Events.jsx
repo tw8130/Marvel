@@ -1,0 +1,67 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import "./Events.css";
+
+
+
+
+const Events = () => {
+  const [events, setEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [showPopAside, setShowPopAside] = useState(false);
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get(
+        'https://gateway.marvel.com/v1/public/events?ts=1&apikey=cdbef97499cdf2891183557d87321821&hash=3ea75c54a7b789cef550d0d1df216321'
+      );
+      setEvents(response.data.data.results);
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    }
+  };
+
+  const handleCardClick = (event, clickedEvent) => {
+    event.stopPropagation();
+    setSelectedEvent(clickedEvent);
+    setShowPopAside(true);
+  };
+
+  return (
+    <div className="events-container">
+      {events.map((event) => (
+        <div key={event.id} className="event-card" onClick={(e) => handleCardClick(e, event)}>
+          {/* Card content */}
+        </div>
+      ))}
+      {selectedEvent && showPopAside && (
+        <div className="popAside">
+          <h4>Characters:</h4>
+          <ul className="popAside-list">
+            {selectedEvent.characters.items.map((character) => (
+              <li key={character.resourceURI}>{character.name}</li>
+            ))}
+          </ul>
+          <h4>Series:</h4>
+          <ul className="popAside-list">
+            {selectedEvent.series.items.map((series) => (
+              <li key={series.resourceURI}>{series.name}</li>
+            ))}
+          </ul>
+          <h4>Comics:</h4>
+          <ul className="popAside-list">
+            {selectedEvent.comics.items.map((comic) => (
+              <li key={comic.resourceURI}>{comic.name}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Events;

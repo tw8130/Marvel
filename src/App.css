@@ -1,0 +1,43 @@
+/* App.css */
+
+.navbar {
+    background-color: #333;
+    color: #fff;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    z-index: 10;
+    /* Ensure the navbar appears above other elements */
+}
+
+.navbar ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    justify-content: space-around;
+    /* Distribute the contents with space between */
+}
+
+.navbar li {
+    margin-right: 20px;
+    /* Increase the margin for medium-sized space between items */
+}
+
+.navbar li a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.navbar li a:hover {
+    color: #ff4500;
+}
+
+body {
+    margin-top: 50px;
+    /* Add top margin to body content to prevent it from being overlapped by the navbar */
+}
