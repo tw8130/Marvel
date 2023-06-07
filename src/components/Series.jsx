@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Series.css";
+import apiConfig from '../api/apiConfig';
+
+const hashedApiKey = apiConfig.hashedApiKey;
+
 
 const Series = () => {
   const [series, setSeries] = useState([]);
@@ -14,7 +18,7 @@ const Series = () => {
   const fetchSeries = async () => {
     try {
       const response = await axios.get(
-        `https://gateway.marvel.com/v1/public/series?ts=1&apikey=cdbef97499cdf2891183557d87321821&hash=3ea75c54a7b789cef550d0d1df216321`
+        `https://gateway.marvel.com/v1/public/series?ts=1&apikey=${hashedApiKey}`
       );
       setSeries(response.data.data.results);
     } catch (error) {

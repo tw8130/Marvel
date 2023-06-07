@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import "./Creators.css";
+import apiConfig from '../api/apiConfig';
+
+const hashedApiKey = apiConfig.hashedApiKey;
 
 
 const Creators = () => {
@@ -13,7 +16,7 @@ const Creators = () => {
   const fetchCreators = async () => {
     try {
       const response = await axios.get(
-        'https://gateway.marvel.com/v1/public/creators?ts=1&apikey=cdbef97499cdf2891183557d87321821&hash=3ea75c54a7b789cef550d0d1df216321'
+        `https://gateway.marvel.com/v1/public/creators?ts=1&apikey=${hashedApiKey}`
       );
       setCreators(response.data.data.results);
     } catch (error) {

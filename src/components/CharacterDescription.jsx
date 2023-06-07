@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams ,Link} from "react-router-dom";
 import axios from "axios";
 import "./CharacterDescription.css";
+import apiConfig from '../api/apiConfig';
+
+const hashedApiKey = apiConfig.hashedApiKey;
 
 const CharacterDescription = () => {
   const { id } = useParams();
@@ -17,7 +20,7 @@ const CharacterDescription = () => {
   const fetchCharacter = async () => {
     try {
       const response = await axios.get(
-        `https://gateway.marvel.com/v1/public/characters/${id}?&ts=1&apikey=cdbef97499cdf2891183557d87321821&hash=3ea75c54a7b789cef550d0d1df216321`
+        `https://gateway.marvel.com/v1/public/characters/${id}?&ts=1&apikey=${hashedApiKey}`
       );
       setCharacter(response.data.data.results[0]);
     } catch (error) {

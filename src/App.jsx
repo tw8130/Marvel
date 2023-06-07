@@ -11,7 +11,10 @@ import Creators from './components/Creators';
 import Series from "./components/Series";
 import SeriesDetails from "./components/SeriesDetails"
 import Home from './components/Home';
-import './App.css';           
+import './App.css'; 
+
+
+
 
 const App = () => {
   return (
