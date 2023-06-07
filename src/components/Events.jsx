@@ -35,7 +35,15 @@ const Events = () => {
     <div className="events-container">
       {events.map((event) => (
         <div key={event.id} className="event-card" onClick={(e) => handleCardClick(e, event)}>
-          {/* Card content */}
+           <img
+              src={`${event.thumbnail.path}/portrait_uncanny.${event.thumbnail.extension}`}
+              alt={event.title}
+              className="event-image"
+            />
+            <div className='event-info'>
+            <h3 className="event-name">Title:{event.title}</h3>
+            <h3 className="event-name">Desc:{event.description}</h3>
+            </div>
         </div>
       ))}
       {selectedEvent && showPopAside && (

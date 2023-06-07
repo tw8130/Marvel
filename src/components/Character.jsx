@@ -1,84 +1,85 @@
-// components/Character.js
-
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Character.css";
 
 const Character = () => {
   const [characters, setCharacters] = useState([]);
-  const [selectedCharacter, setSelectedCharacter] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     fetchCharacters();
+   
   }, []);
 
   const fetchCharacters = async () => {
     try {
       const response = await axios.get(
-        // Replace with your Marvel API endpoint for fetching characters
-        "https://gateway.marvel.com/v1/public/characters?ts=1&apikey=cdbef97499cdf2891183557d87321821&hash=3ea75c54a7b789cef550d0d1df216321"
+        "https://gateway.marvel.com/v1/public/characters?&limit=30&offset=0&ts=1&apikey=cdbef97499cdf2891183557d87321821&hash=3ea75c54a7b789cef550d0d1df216321"
       );
-      const data = response.data.data.results;
-      setCharacters(data);
+      setCharacters(response.data.data.results);
     } catch (error) {
       console.error("Error fetching characters:", error);
     }
   };
 
-  const openCharacterDetails = (character) => {
-    setSelectedCharacter(character);
+  const handleInputChange = (event) => {
+    setSearchTerm(event.target.value);
   };
 
-  const closeCharacterDetails = () => {
-    setSelectedCharacter(null);
-  };
-
+  const filteredCharacters = characters.filter((character) =>
+  character.name.toLowerCase().includes(searchTerm.toLowerCase())
+);
+  
   return (
-    <div className="character-container">
-      <h1 className="character-title">Marvel Characters</h1>
-      <div className="character-grid">
-        {characters.map((character) => (
-          <div
-            key={character.id}
-            className="character-card"
-            onClick={() => openCharacterDetails(character)}
-          >
+    <div>
+      <div className="search-container">
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={handleInputChange}
+            placeholder="Search character by name"
+          />
+          <button onClick={fetchCharacters}>Search</button>
+      </div>
+        {/* <div className="character-container">
+      
+            {characters.map((character) => (
+              <div key={character.id} className="character-card">
+                <img
+                  src={`${character.thumbnail.path}/standard_medium.${character.thumbnail.extension}`}
+                  alt={character.name}
+                  className="character-image"
+                />
+                <h3 className="character-name">{character.name}</h3>
+                <Link to={`/characters/${character.id}`} className="view-details-btn">
+                  View Details
+                </Link>
+              </div>
+            ))}
+        </div> */}
+
+        <div className="character-container">
+        {filteredCharacters.map((character) => (
+          <div key={character.id} className="character-card">
             <img
-              src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
+              src={`${character.thumbnail.path}/standard_medium.${character.thumbnail.extension}`}
               alt={character.name}
               className="character-image"
             />
             <h3 className="character-name">{character.name}</h3>
-            <p className="character-description">{character.description}</p>
+            <Link to={`/characters/${character.id}`} className="view-details-btn">
+              View Details
+            </Link>
           </div>
         ))}
       </div>
-
-      {selectedCharacter && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={closeCharacterDetails}>
-              &times;
-            </span>
-            <h2>{selectedCharacter.name}</h2>
-            <p>{selectedCharacter.description}</p>
-            <h3>Comics</h3>
-            <ul>
-              {selectedCharacter.comics.items.map((comic, index) => (
-                <li key={index}>{comic.name}</li>
-              ))}
-            </ul>
-            <h3>Stories</h3>
-            <ul>
-              {selectedCharacter.stories.items.map((story, index) => (
-                <li key={index}>{story.name}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
     </div>
   );
+
+ 
+ 
 };
 
 export default Character;
+

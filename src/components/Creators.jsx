@@ -13,7 +13,7 @@ const Creators = () => {
   const fetchCreators = async () => {
     try {
       const response = await axios.get(
-        'https://gateway.marvel.com/v1/public/creators?apikey=YOUR_API_KEY'
+        'https://gateway.marvel.com/v1/public/creators?ts=1&apikey=cdbef97499cdf2891183557d87321821&hash=3ea75c54a7b789cef550d0d1df216321'
       );
       setCreators(response.data.data.results);
     } catch (error) {

@@ -1,0 +1,38 @@
+.series-container {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(245, 243, 242);
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.series-card {
+    width: 350px;
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+.series-image {
+    width: 10%;
+    height: 30%;
+    /* object-fit: cover;
+    width: 200px;
+    height: 200px; */
+}
+
+.series-title {
+    margin-top: 10px;
+}
+
+.view-details-btn {
+    display: block;
+    margin-top: 10px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+}
